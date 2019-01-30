@@ -1,0 +1,7 @@
+# Visual studio files
+*.suo
+.vs/
+
+# Build results
+[Bb]in/
+[Oo]bj/

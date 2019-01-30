@@ -1,0 +1,28 @@
+﻿<ContentDialog
+    x:Class="Kanban4U.PersonalAccessTokenDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Kanban4U"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Authentication Failed"
+    PrimaryButtonText="Save">
+
+    <StackPanel Orientation="Vertical">
+        <TextBlock
+            TextWrapping="Wrap"
+            Margin="0,0,0,12"
+            Text="Authentication with ADAL failed. Please enter a VSTS personal access token. This will be saved and used for all future sessions."/>
+        <RichTextBlock
+            TextWrapping="Wrap"
+            Margin="0,0,0,12"
+            IsTextSelectionEnabled="True">
+            <Paragraph>
+                To acquire a token go
+                <Hyperlink NavigateUri="{x:Bind CreateTokenUri}">here</Hyperlink>, select "Add", type in a Description and select &quot;Create Token&quot;. Copy that string value and paste it here.
+            </Paragraph>
+        </RichTextBlock>
+        <TextBox Text="{x:Bind PersonalAccessToken, Mode=TwoWay}" TextWrapping="Wrap"/>
+    </StackPanel>
+</ContentDialog>

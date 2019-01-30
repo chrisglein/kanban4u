@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="Kanban4U.NavigationFrame"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Kanban4U"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <controls:NavigationView
+            x:Name="NavigationView"
+            x:FieldModifier="public"
+            ExpandedModeThresholdWidth="9000"
+            IsBackButtonVisible="Collapsed"
+            IsSettingsVisible="true"
+            SelectionChanged="NavigationView_SelectionChanged"
+            AlwaysShowHeader="false">
+            <controls:NavigationView.MenuItems>
+                <controls:NavigationViewItem Content="Me" Icon="DockLeft" Tag="IndividualHorizontal"/>
+                <controls:NavigationViewItem Content="Me" Icon="DockBottom" Tag="IndividualVertical"/>
+                <controls:NavigationViewItem Content="Team Burndown" Icon="AlignLeft" Tag="TeamBurndown"/>
+            </controls:NavigationView.MenuItems>
+
+            <Frame x:Name="MainFrame" x:FieldModifier="public"/>
+
+        </controls:NavigationView>
+    </Grid>
+</Page>
