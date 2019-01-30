@@ -13,19 +13,18 @@ namespace Kanban4U
         private Windows.Storage.ApplicationDataContainer _roamingSettings;
         private static Configuration s_instance;
 
-        public string TeamProjectName { get; set; }
-        public string TeamVSTSUri { get; set; }
-        public string TeamVSSPSUri { get; set; }
-        public string TeamId { get; set; }
-        public string TeamName { get; set; }
-        public string TeamProjectId { get; set; }
-        public string RemainingDaysFieldName { get; set; } = "Microsoft.VSTS.Scheduling.Effort";
-        public string CostFieldName { get; set; }
-        public string SubstatusFieldName { get; set; }
-        public string RankFieldName { get; set; }
-        public string ViewOnWebQueryId { get; set; }
+        public string TeamProjectName { get; private set; } = "DefaultCollection";
+        public string TeamVSTSUri { get; private set; }
+        public string TeamId { get; private set; }
+        public string TeamName { get; private set; }
+        public string TeamProjectId { get; private set; }
+        public string RemainingDaysFieldName { get; private set; } = "Microsoft.VSTS.Scheduling.Effort";
+        public string CostFieldName { get; private set; }
+        public string SubstatusFieldName { get; private set; }
+        public string RankFieldName { get; private set; }
+        public string ViewOnWebQueryId { get; private set; }
 
-        public string MeQueryWiql { get; set; } = @"
+        public string MeQueryWiql { get; private set; } = @"
 SELECT
     [System.Id],
     [System.Title],
@@ -38,7 +37,7 @@ WHERE
 ORDER BY [System.IterationPath]
 ";
 
-        public string TeamMeQueryWiql { get; set; } = @"
+        public string TeamMeQueryWiql { get; private set; } = @"
 SELECT
     [System.Id],
     [System.Title],
@@ -54,7 +53,7 @@ ORDER BY [System.AssignedTo],
     [System.IterationPath]
 ";
 
-        public string CompletedQueryWiql { get; set; } = @"
+        public string CompletedQueryWiql { get; private set; } = @"
 SELECT
     [System.Id],
     [System.Title],
@@ -73,7 +72,7 @@ WHERE
 ORDER BY [System.IterationPath]
 ";
 
-        public string TeamCompletedQueryWiql { get; set; } = @"
+        public string TeamCompletedQueryWiql { get; private set; } = @"
 SELECT
     [System.Id],
     [System.Title],
@@ -108,16 +107,18 @@ ORDER BY [System.WorkItemType],
         private Configuration()
         {
             _roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+
+            object value;
+            if (_roamingSettings.Values.TryGetValue("TeamVSTSUri", out value))
+            {
+                TeamVSTSUri = value.ToString();
+            }
         }
 
-        public string GetRoamingGroupTaskID()
+        public void SetTeamVSTSUri(string value)
         {
-            return (string)_roamingSettings.Values["scram_group_id"];
-        }
-
-        public void SetRoamingGroupTaskID(string taskID)
-        {
-            _roamingSettings.Values["scram_group_id"] = taskID;
+            _roamingSettings.Values["TeamVSTSUri"] = value;
+            TeamVSTSUri = value;
         }
 
     }

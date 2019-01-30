@@ -110,6 +110,13 @@ namespace Kanban4U
             };
             await waitDialog.ShowAsync();
 #endif
+            if (String.IsNullOrWhiteSpace(Configuration.CurrentConfig.TeamVSTSUri))
+            {
+                var projectDialog = new ProjectDialog();
+                await projectDialog.ShowAsync();
+                Configuration.CurrentConfig.SetTeamVSTSUri(projectDialog.ProjectUrl);
+            }
+
             Refresh(null, null);
         }
 
