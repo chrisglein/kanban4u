@@ -697,7 +697,7 @@ namespace Kanban4U
         {
             using (var client = await GetClient())
             {
-                string url = Configuration.CurrentConfig.TeamVSSPSUri + "/_apis/profile/profiles/me";
+                string url = "https://app.vssps.visualstudio.com/_apis/profile/profiles/me";
                 HttpResponseMessage response = await client.GetAsync(new Uri(url));
 
                 if (CheckHttpResponse(response))

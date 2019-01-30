@@ -31,6 +31,8 @@ namespace Kanban4U
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            TeamVSTSUri.Text = Configuration.CurrentConfig.TeamVSTSUri;
+
             if (Settings.PersonalAccessToken == null)
             {
                 Settings.PersonalAccessToken = "";
@@ -52,6 +54,14 @@ namespace Kanban4U
             var chosenTeamId = GlobalSettings.Instance.Team?.TeamId;
             Teams.SelectedItem = list.FirstOrDefault(x => x.TeamId == chosenTeamId);
             Teams.IsEnabled = true;
+        }
+
+        private void TeamVSTSUri_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TeamVSTSUri.Text != Configuration.CurrentConfig.TeamVSTSUri)
+            {
+                Configuration.CurrentConfig.SetTeamVSTSUri(TeamVSTSUri.Text);
+            }
         }
 
         private void PersonalAccessToken_TextChanged(object sender, TextChangedEventArgs e)

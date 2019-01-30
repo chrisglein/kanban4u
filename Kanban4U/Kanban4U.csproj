@@ -113,6 +113,9 @@
     <Compile Include="PersonalAccessTokenDialog.xaml.cs">
       <DependentUpon>PersonalAccessTokenDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ProjectDialog.xaml.cs">
+      <DependentUpon>ProjectDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Converters.cs" />
     <Compile Include="Resources\GlobalSettings.cs" />
     <Compile Include="SettingsPage.xaml.cs">
@@ -223,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PersonalAccessTokenDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProjectDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -15,13 +15,13 @@ namespace Kanban4U
             get { return (string)GetValue(PersonalAccessTokenProperty); }
             set { SetValue(PersonalAccessTokenProperty, value); }
         }
+        public static readonly DependencyProperty PersonalAccessTokenProperty =
+            DependencyProperty.Register("PersonalAccessToken", typeof(string), typeof(PersonalAccessTokenDialog), new PropertyMetadata(""));
 
         public string CreateTokenUri
         {
             get { return Configuration.CurrentConfig.TeamVSTSUri +"/_details/security/tokens"; }
         }
 
-        public static readonly DependencyProperty PersonalAccessTokenProperty =
-            DependencyProperty.Register("PersonalAccessToken", typeof(string), typeof(PersonalAccessTokenDialog), new PropertyMetadata(""));
     }
 }
