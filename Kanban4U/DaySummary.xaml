@@ -1,0 +1,34 @@
+﻿<UserControl
+    x:Class="Kanban4U.DaySummary"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Kanban4U"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="20"
+    d:DesignWidth="150">
+
+    <Border BorderThickness="1" BorderBrush="Black" Grid.Column="0">
+        <Grid Background="#AFE0FF" Padding="4,0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock FontSize="15" Grid.Column="1" HorizontalAlignment="Right">
+                <Run Text="{x:Bind Model.Amount, Mode=OneWay}" FontWeight="Bold"/>
+            </TextBlock>
+            <TextBlock FontSize="9" Grid.Column="0" VerticalAlignment="Center">
+                <!-- x:Bind doesn't seem to allow Model.Date.ToString('d') although documentation indicates it should -->
+                <Run Text="{x:Bind DateFormatNoWorky(Model.Date, 'ddd M/d'), Mode=OneWay}"/>
+            </TextBlock>
+            <ToolTipService.ToolTip>
+                <ToolTip Content="{x:Bind Model.Details, Mode=OneWay}"/>
+            </ToolTipService.ToolTip>
+        </Grid>
+    </Border>
+</UserControl>
