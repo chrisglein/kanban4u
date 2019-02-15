@@ -18,7 +18,7 @@ namespace Kanban4U
 {
     public static class GitHubLogic
     {
-        public static async Task<string> GetGitHubAccessToken()
+        private static async Task<string> GetGitHubAccessToken()
         {
             var settings = GlobalSettings.Instance;
             if (settings.GitHubAccessToken == null)
@@ -31,7 +31,7 @@ namespace Kanban4U
 
         private static SemaphoreSlim s_authenticationLock = new SemaphoreSlim(1);
 
-        public static async Task<string> GetGitHubAccessTokenWorker()
+        private static async Task<string> GetGitHubAccessTokenWorker()
         {
             await s_authenticationLock.WaitAsync();
 
@@ -40,18 +40,11 @@ namespace Kanban4U
                 string accessCode = "";
                 WebView webView = new WebView();
                 ContentDialog dialog = new ContentDialog();
-                //dialog.Content = "Do you want to authenticate to GitHub?";
-                //dialog.PrimaryButtonText = "Yes";
-                //dialog.PrimaryButtonClick += (sender, args) => { yesClicked = true; };
-                //dialog.SecondaryButtonText = "No";
                 dialog.Content = webView;
 
                 webView.MinWidth = 400;
                 webView.MinHeight = 700;
 
-                //var msappUri = WebAuthenticationBroker.GetCurrentApplicationCallbackUri();
-                //System.Diagnostics.Debug.Assert(msappUri == new Uri("ms-app://s-1-15-2-3873301497-715253160-2862221639-955569770-3342954887-1966562334-537999965/"),
-                //    "If app callback URI changes you need to update the Azure App Registration callback URIs as well");
                 var redirectUri = new Uri("https://github.com/chrisglein/kanban4u");
                 var redirectUriEscaped = Uri.EscapeDataString(redirectUri.AbsoluteUri);
                 var state = DateTime.Now.Ticks.ToString(); // Unique string for this session
@@ -62,7 +55,6 @@ namespace Kanban4U
                     $"&scope=repo user" +
                     $"&state={state}";
 
-                //var result = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.UseHttpPost | WebAuthenticationOptions.UseCorporateNetwork, new Uri(oauthUri));
                 webView.Navigate(new Uri(oauthUri));
 
                 webView.NavigationStarting += (sender, args) =>
@@ -76,8 +68,8 @@ namespace Kanban4U
 
                         accessCode = query.Get("code");
 
-                    // Success, all done.
-                    dialog.Hide();
+                        // Success, all done.
+                        dialog.Hide();
 
                         webView.Stop();
                     }
