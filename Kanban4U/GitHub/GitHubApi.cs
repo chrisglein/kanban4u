@@ -16,9 +16,9 @@ using Windows.UI.Xaml.Markup;
 
 namespace Kanban4U
 {
-    public static class GitHubLogic
+    public static class GitHubApi
     {
-        private static async Task<string> GetGitHubAccessToken()
+        private static async Task<string> EnsureGitHubAccessToken()
         {
             var settings = GlobalSettings.Instance;
             if (settings.GitHubAccessToken == null)
@@ -108,7 +108,7 @@ namespace Kanban4U
 
         private static async Task<HttpClient> GetClient()
         {
-            var accessToken = await GetGitHubAccessToken();
+            var accessToken = await EnsureGitHubAccessToken();
 
             // Authenticate using the personal access token
             var client = new HttpClient();
