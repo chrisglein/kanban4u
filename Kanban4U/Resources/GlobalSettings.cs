@@ -323,6 +323,22 @@ namespace Kanban4U
 
         private StorageFile _cacheFile;
 
+        public string GitHubAccessToken
+        {
+            get
+            {
+                return _gitHubAccessToken;
+            }
+            set
+            {
+                if (this.SetProperty(PropertyChanged, ref _gitHubAccessToken, value))
+                {
+                    SaveSettings();
+                }
+            }
+        }
+        private string _gitHubAccessToken;
+
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

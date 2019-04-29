@@ -118,6 +118,10 @@ namespace Kanban4U
             }
 
             Refresh(null, null);
+
+            var user = await GitHubLogic.GetCurrentUser();
+
+            var getIssues = await GitHubLogic.GetAssignedIssues(user.GitHub.Login);
         }
 
         private async void ItemClick(object sender, ItemClickEventArgs e)
