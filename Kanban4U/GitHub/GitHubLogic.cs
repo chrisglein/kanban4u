@@ -181,17 +181,25 @@ query GetAssignedIssues {
             {
                 var issue = issueEdge["node"].ToObject<GitHubIssue>();
 
-                foreach (var labelEdge in issueEdge["node"]["labels"]["edges"])
+                var labels = issueEdge["node"]["labels"]?["edges"];
+                if (labels != null)
                 {
-                    var label = labelEdge["node"].ToObject<GitHubLabel>();
-                    issue.Labels.Add(label);
+                    foreach (var labelEdge in labels)
+                    {
+                        var label = labelEdge["node"].ToObject<GitHubLabel>();
+                        issue.Labels.Add(label);
+                    }
                 }
 
-                foreach (var assigneeEdge in issueEdge["node"]["assignees"]["edges"])
+                var assignees = issueEdge["node"]["assignees"]?["edges"];
+                if (assignees != null)
                 {
-                    var assignee = assigneeEdge["node"]["login"].ToString();
-                    var person = await GetGitHubPerson(assignee);
-                    issue.Assignees.Add(person);
+                    foreach (var assigneeEdge in assignees)
+                    {
+                        var assignee = assigneeEdge["node"]["login"].ToString();
+                        var person = await GetGitHubPerson(assignee);
+                        issue.Assignees.Add(person);
+                    }
                 }
 
                 issues.Add(issue);

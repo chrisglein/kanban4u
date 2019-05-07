@@ -118,10 +118,6 @@ namespace Kanban4U
             }
 
             Refresh(null, null);
-
-            var user = await GitHubLogic.GetCurrentUser();
-
-            var getIssues = await GitHubLogic.GetAssignedIssues(user.GitHub.Login);
         }
 
         private async void ItemClick(object sender, ItemClickEventArgs e)
@@ -167,6 +163,22 @@ namespace Kanban4U
                 {
                     AuditIssues.Add(issue);
                 }
+            }
+
+            // Get GitHub issues
+            var user = await GitHubLogic.GetCurrentUser();
+            var getIssues = await GitHubLogic.GetAssignedIssues(user.GitHub.Login);
+            foreach (var item in getIssues)
+            {
+                // Map them to the existing WorkItem type as best as possible
+                WorkItem workItem = new WorkItem();
+                workItem.Title = item.Title;
+                workItem.Url = item.Url;
+                if (item.Assignees.Count > 0)
+                {
+                    workItem.AssignedTo = item.Assignees[0].GitHub.Login;
+                }
+                WorkItems.Add(workItem);
             }
 
             UpdateCosts();
