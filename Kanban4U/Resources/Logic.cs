@@ -998,6 +998,26 @@ namespace Kanban4U
 
             return issues;
         }
+
+
+        // NOTE: This helper is here because it needs the VSTS auth token
+        public static async Task<List<GitHubPerson>> GetGitHubToAADLinks()
+        {
+            using (var client = await GetClient())
+            {
+                HttpResponseMessage response = await client.GetAsync(new Uri("https://repos.opensource.microsoft.com/api/people/links?api-version=2017-09-01"));
+
+                if (CheckHttpResponse(response))
+                {
+                    return new List<GitHubPerson>();
+                }
+
+                string responseString = await response.Content.ReadAsStringAsync();
+                JArray responseParsed = JArray.Parse(responseString);
+
+                return responseParsed.ToObject<List<GitHubPerson>>();
+            }
+        }
     }
 
     public class LogicQueryResult
